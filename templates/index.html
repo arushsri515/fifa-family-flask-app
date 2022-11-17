@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>FIFA World Cup 2022 Family Competition</title>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+</head>
+<body>
+	<section class="main-content">
+		<div class="container">
+			<h1>Welcome to the 2022 FIFA World Cup Family Competition!</h1>
+			<div style="text-align:center">
+				<h4>Created by Arush Srivastava</h4>
+			</div>
+			<br>
+			<br>
+			<h2>Top Players </h2>
+			<br>
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="leaderboard-card">
+						<div class="leaderboard-card__top">
+							<h3 class="text-center">{{ data[1]['Points'] }} points</h3>
+						</div>
+						<div class="leaderboard-card__body">
+							<div class="text-center">
+								<img src="/static/img/user2.jpg" class="circle-img mb-2" alt="User Img">
+								<h5 class="mb-0">{{ data[1]['Name'] }}</h5>
+								<!-- <p class="text-muted mb-0">@sandeep</p> -->
+								<!-- <hr> -->
+								<!-- <div class="d-flex justify-content-between align-items-center">
+									<span><i class="fa fa-map-marker"></i> <h4 class="text-success"><i class="fa fa-arrow-up"></i>5</h4></span>
+									<button class="btn btn-outline-success btn-sm">Congratulate</button>
+								</div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="leaderboard-card leaderboard-card--first">
+						<div class="leaderboard-card__top">
+							<h3 class="text-center">{{ data[0]['Points'] }} points</h3>
+						</div>
+						<div class="leaderboard-card__body">
+							<div class="text-center">
+								<img src="/static/img/user1.jpg" class="circle-img mb-2" alt="User Img">
+								<h5 class="mb-0">{{ data[0]['Name'] }}</h5>
+								<!-- <p class="text-muted mb-0">@kiranacharyaa</p> -->
+								<!-- <hr> -->
+								<!-- <div class="d-flex justify-content-between align-items-center">
+									<span><i class="fa fa-map-marker"></i> <h4 class="text-success"><i class="fa fa-arrow-up"></i>5</h4></span>
+									<button class="btn btn-outline-success btn-sm">Congratulate</button>
+								</div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="leaderboard-card">
+						<div class="leaderboard-card__top">
+							<h3 class="text-center">{{ data[2]['Points'] }} points</h3>
+						</div>
+						<div class="leaderboard-card__body">
+							<div class="text-center">
+								<img src="/static/img/user3.jpg" class="circle-img mb-2" alt="User Img">
+								<h5 class="mb-0">{{ data[2]['Name'] }}</h5>
+								<!-- <p class="text-muted mb-0">@johndoe</p> -->
+								<!-- <hr> -->
+								<!-- <div class="d-flex justify-content-between align-items-center">
+									<span><i class="fa fa-map-marker"></i> <h4 class="text-success"><i class="fa fa-arrow-up"></i>5</h4></span>
+									<button class="btn btn-outline-success btn-sm">Congratulate</button>
+								</div> -->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<h4>Leaderboard</h4>
+
+			<table class="table">
+				<thead>
+					<tr>
+						<th>Rank and Name</th>
+						<th>Points</th>
+						<th>Rank Change</th>
+						<th>Championship Win Prediction</th>
+						<!-- <th>Congratulate</th> -->
+					</tr>
+				</thead>
+				<tbody>
+					{% for row in data %}
+					<tr>
+						<td>
+							<div class="d-flex align-items-center">
+								<h1 class="pr-4 pl-4">{{ row['Rank'] }}</h1>
+								<!-- <img src="/static/img/user1.jpg" class="circle-img circle-img--small mr-2" alt="User Img"> -->
+								<div class="user-info__basic">
+									<h5 class="mb-0">{{ row['Name'] }}</h5>
+									<!-- <p class="text-muted mb-0">@kiranacharyaa</p> -->
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="d-flex align-items-baseline">
+								<h4 class="mr-1">{{ row['Points'] }}</h4><small class="text-success"><i class="fa fa-plus"></i>{{ row['Points']-row['PreviousPoints'] }}</small>
+							</div>
+						</td>
+						<td><h4 class="text-{{ row['color'] }}"><i class="fa fa-arrow-{{ row['arrow'] }}"></i>{{ row['RankDifferential'] }}</h4></td>
+						<td>{{ row['WinPrediction'] }}</td>
+						<!-- <td>
+							<button class="btn btn-success btn-sm">Congratulate</button>
+						</td>-->
+					</tr>
+					{% endfor %}
+					<!-- <tr>
+						<td>
+							<div class="d-flex align-items-center">
+								<h1 class="pr-4 pl-4">2</h1>
+								<-- <img src="/static/img/user2.jpg" class="circle-img circle-img--small mr-2" alt="User Img"> --
+								<div class="user-info__basic">
+									<h5 class="mb-0">Number 2</h5>
+									<-- <p class="text-muted mb-0">@sandeep</p> --
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="d-flex align-items-baseline">
+								<h4 class="mr-1">37</h4><small class="text-danger"><i class="fa fa-arrow-down"></i>5</small>
+							</div>
+						</td>
+						<td><h4 class="text-success"><i class="fa fa-arrow-up"></i>5</h4></td>
+						<td>Brazil</td>
+						<-- <td>
+							<button class="btn btn-success btn-sm">Congratulate</button>
+						</td>--
+					</tr>
+					<tr>
+						<td>
+							<div class="d-flex align-items-center">
+								<h1 class="pr-4 pl-4">3</h1>
+								<-- <img src="/static/img/user3.jpg" class="circle-img circle-img--small mr-2" alt="User Img"> --
+								<div class="user-info__basic">
+									<h5 class="mb-0">Number 3</h5>
+									<-- <p class="text-muted mb-0">@johndoe</p> --
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="d-flex align-items-baseline">
+								<h4 class="mr-1">35</h4><small class="text-success"><i class="fa fa-arrow-up"></i>5</small>
+							</div>
+						</td>
+						<td><h4 class="text-success"><i class="fa fa-arrow-up"></i>5</h4></td>
+						<td>England</td>
+						<-- <td>
+							<button class="btn btn-success btn-sm">Congratulate</button>
+						</td>--
+					</tr>
+					<tr>
+						<td>
+							<div class="d-flex align-items-center">
+								<h1 class="pr-4 pl-4">4</h1>
+								<-- <img src="/static/img/user4.jpg" class="circle-img circle-img--small mr-2" alt="User Img"> --
+								<div class="user-info__basic">
+									<h5 class="mb-0">Number 4</h5>
+									<-- <p class="text-muted mb-0">@johnnoakes</p> --
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="d-flex align-items-baseline">
+								<h4 class="mr-1">26</h4><small class="text-success"><i class="fa fa-arrow-up"></i>5</small>
+							</div>
+						</td>
+						<td><h4 class="text-success"><i class="fa fa-arrow-up"></i>5</h4></td>
+						<td>Portugal</td>
+						<-- <td>
+							<button class="btn btn-success btn-sm">Congratulate</button>
+						</td>--
+					</tr>
+					<tr>
+						<td>
+							<div class="d-flex align-items-center">
+								<h1 class="pr-4 pl-4">5</h1>
+								<-- <img src="/static/img/user5.jpg" class="circle-img circle-img--small mr-2" alt="User Img">  --
+								<div class="user-info__basic">
+									<h5 class="mb-0">Number 5</h5>
+									<-- <p class="text-muted mb-0">@tomharry</p> --
+								</div>
+							</div>
+						</td>
+						<td>
+							<div class="d-flex align-items-baseline">
+								<h4 class="mr-1">19</h4><small class="text-danger"><i class="fa fa-arrow-down"></i>5</small>
+							</div>
+						</td>
+						<td><h4 class="text-success"><i class="fa fa-arrow-up"></i>5</h4></td>
+						<td>France</td>
+						<-- <td>
+							<button class="btn btn-success btn-sm">Congratulate</button>
+						</td>--
+					</tr> -->
+				</tbody>
+			</table>
+		</div>
+	</section>
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>

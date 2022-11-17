@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>FIFA World Cup 2022 Family Competition</title>
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/bracket.css">
+  <link rel="stylesheet" type="text/css" href="/static/css/bracket.css.map">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  
+</script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel=”stylesheet” integrity=”sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+</head>
+<body>
+	<section class="main-content">
+    <div class="container">
+    <h1>Welcome to the 2022 FIFA World Cup Family Competition! </h1>
+      <br>
+      <br>
+    </div>
+		<div class="container" id="groupStage">
+			
+      <h4>
+        This is a FIFA World Cup tournament bracket. This is the layout of how the actual FIFA World Cup will happen!
+      </h4>
+      <div style="text-align : center">
+        <img style = "width : 50%; height : 50%" src="{{ url_for('static', filename='img/bracket.png') }}">
+      </div>
+      <h6>
+      Each group(Group A-H) is a groups of 4 teams who will play in matches for a spot in the playoffs, which are the lines you see.
+      The teams in the playoffs will be decided by who wins the most matches in a group. The team who wins the most matches in Group A
+      will be first place in the group, and will be given the title "1A." That team will take the spot of 1A in the playoffs, as shown in
+      the bracket.
+      </h6>
+      <br>
+      <h3>We will guide you through picking who you think will win the world cup!</h3>
+      <br> 
+			<form class="form-horizontal">
+                <fieldset>
+                
+                <!-- Form Name -->
+                <!-- <legend>FIFA World Cup Predictions</legend> -->
+                
+                <!-- Text input-->
+                <!-- <div class="form-group">
+                  <h5><label class="control-label" for="name">Name</label></h5>  
+                  <div class="">
+                  <input id="name" name="name" type="text" placeholder="Name" class="form-control input-md" required>
+                    
+                  </div>
+                </div> -->
+                <div class="form-group">
+                    <h5><label class="control-label" for="selectbasic">First, select your name</label></h5>
+                    <div class="">
+                        <select id="name" name="name" class="form-control">
+                        <option value="Vatsala">Vatsala</option>
+                        <option value="Krisha">Krisha</option>
+                        <option value="Kashika">Kashika</option>
+                        <option value="Anand">Anand</option>
+                        <option value="Anshaj">Anshaj</option>
+                        <option value="Anshuman">Anshuman</option>
+                        <option value="Rahul">Rahul</option>
+                        <option value="Nani">Nani</option>
+                        <option value="Nana">Nana</option>
+                        <option value="Prashant">Prashant</option>
+                        <option value="Ajay">Ajay</option>
+                        <option value="Arnav">Arnav</option>
+                        <option value="Vani">Vani</option>
+                        <option value="Vartica">Vartica</option>
+                        <option value="Aahika">Aahika</option>
+                        <option value="Varuna">Varuna</option>
+                        <option value="Ayushman">Ayushman</option>
+                        <option value="Aryamaan">Aryamaan</option>
+                        <option value="Arush">Arush</option>
+                        <option value="Aakrit">Aakrit</option>
+                        <option value="Versha">Versha</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Multiple Radios -->
+                {% for match in matchqas %}
+                <div class="form-group">
+                  {% if match[3]%6==0 %}
+                    <h4>{% if match[3]==0 %} First, {% endif %} We will {% if match[3]!=0 %} now {% endif %} predict the match outcomes of {{ match[4] }} to predict who will win in {{ match[4] }}. {% if match[3]==0 %} You win points for guessing these matches right! {% endif %}</h4>
+                  {% endif %}
+                  <h4></h4>
+                  <h5><label class="control-label" for="radios{{ match[3] }}">{{ match[0] }}</label></h5>
+                  <div class="">
+                    <div class="radio">
+                        <label for="radios-0">
+                        <input type="radio" name="radios{{ match[3] }}" id="radios-0" value="{{ match[1] }}" checked>
+                        {{ match[1] }}
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label for="radios-1">
+                        <input type="radio" name="radios{{ match[3] }}" id="radios-1" value="{{ match[2] }}">
+                        {{ match[2] }}
+                        </label>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+                
+                <!-- Button -->
+                <div class="form-group">
+                  <div class="">
+                    <button id="next" type="button" onclick=submitPred() class="btn btn-primary">Next</button>
+                  </div>
+                </div>
+                
+                </fieldset>
+                </form>
+                
+		</div>
+        <div id="success" style="display:none">
+            <h1>Thank you for submitting! Good Luck!</h1>
+        </div>
+        <div class="container">
+          <div class="tournament-container" style="display:none" id="bracket">
+          <h4>This is the tournament playoff bracket like mentioned earlier! The teams that you had winning each group have automatically been filled in. For each round, click on the team you think will win. Click proceed underneath the round to lock that round in and move to the next one. Do this until you reach the the finals and then you're good to go! Good luck!</h4>
+        
+          <div class="tournament-headers">
+            <h3>Round of 16</h3>
+            <h3>Quarter-Finals</h3>
+            <h3>Semi-Finals</h3>
+            <h3>Final</h3>
+            <h3>Winner</h3>
+          </div>
+        
+          <div class="tournament-brackets" >
+            <ul class="bracket bracket-1">
+              <li class="team-item" id="1A2B">1A <time>vs</time> 2B</li>
+              <li class="team-item" id="1C2D">1C <time>vs</time> 2D</li>
+              <li class="team-item" id="1E2F">1E <time>vs</time> 2F</li>
+              <li class="team-item" id="1G2H">1G <time>vs</time> 2H</li>
+              <li class="team-item" id="1B2A">1B <time>vs</time> 2A</li>
+              <li class="team-item" id="1D2C">1D <time>vs</time> 2C</li>
+              <li class="team-item" id="1F2E">1F <time>vs</time> 2E</li>
+              <li class="team-item" id="1H2G">1H <time>vs</time> 2G</li>
+              <li><br></li>
+              <li class="" style="text-align:center"><button type="button" class="btn btn-primary" id="R16Next" onclick=proceedToQF()>Proceed to Next Round</button></li>
+            </ul>  
+            <ul class="bracket bracket-2">
+              <li class="team-item" id="QF1">QF1 <time>20:00</time> QF2</li>
+              <li class="team-item" id="QF2">QF3 <time>20:00</time> QF4</li>
+              <li class="team-item" id="QF3">QF5 <time>20:00</time> QF6</li>
+              <li class="team-item" id="QF4">QF7 <time>20:00</time> QF8</li>
+              <li><br></li>
+              <li class="" style="text-align:center"><button type="button" class="btn btn-primary" id="QFNext" style="display:none" onclick=proceedToSF()>Proceed to Next Round</button></li>
+            </ul>  
+            <ul class="bracket bracket-3">
+              <li class="team-item" id="SF1">SF1 <time>20:00</time> SF2</li>
+              <li class="team-item" id="SF2">SF3 <time>20:00</time> SF4</li>
+              <li><br></li>
+              <li class="" style="text-align:center"><button type="button" class="btn btn-primary" id="SFNext" style="display:none" onclick=proceedToF()>Proceed to Next Round</button></li>
+            </ul>  
+            <ul class="bracket bracket-4">
+              <li class="team-item" id="F1">F1 <time>20:00</time> F2</li>
+              <li><br></li>
+              <li class="" style="text-align:center"><button type="button" class="btn btn-primary" id="FNext" style="display:none" onclick=showChamp()>Show Results</button></li>
+            </ul>  
+        
+            <ul class="bracket bracket-5">
+              <li class="team-item" id="champion">2022 FIFA World Cup Champion</li>
+              <li><br></li>
+              <li class="" style="text-align:center"><a href="#"><button type="button" class="btn btn-primary" id="submit" style="display:none">Done</button></a></li>
+            </ul>  
+          </div>
+        </div>
+      </div>
+	</section>
+	<script
+  src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script>
+        function submitPred(){
+          console.log("next")
+          document.getElementById("groupStage").style.display = "none"
+          var output = []
+          var matchqas = {{ matchqas | safe }}
+          console.log(matchqas.length)
+          for(i=0; i<matchqas.length; i++){
+            console.log(i)
+            var radioset = document.getElementsByName("radios" + String(i))
+            console.log(radioset)
+            console.log("radios" + String(i))
+            for(x = 0; x < radioset.length; x++) {
+                if(radioset[x].checked){
+                output.push(matchqas[i][x+1])
+              }
+            }    
+          }
+          console.log(output)
+          serverdata = {}
+          Object.values(matchqas).forEach(function(element,index){
+            serverdata['name'] = document.getElementById("name").value
+            serverdata[element[0]] = output[index]
+          })
+          console.log("---------------------\n")
+          console.log(matchqas)
+          console.log("\n---------------------------")
+          console.log("---------------------\n")
+          console.log(serverdata) 
+          console.log("\n---------------------------")
+          $.ajax({
+            type: "POST",
+            url: "/pushpredictions",
+            data: JSON.stringify(serverdata),
+            contentType: "application/json",
+            dataType: 'json' 
+          });
+          winCountDict = {"A" : {},
+                          "B" : {},
+                          "C" : {},
+                          "D" : {},
+                          "E" : {},
+                          "F" : {},
+                          "G" : {},
+                          "H" : {}}
+          groups = ["A","B","C","D","E","F","G","H"]
+          for(n=0;n<output.length;n++){
+            console.log(output[n])
+            if(output[n]==matchqas[n][1]){
+              loser = matchqas[n][2]
+            } else {
+              loser = matchqas[n][1]
+            }
+            console.log(n)
+            console.log(Math.floor(n/6))
+            console.log(groups[Math.floor(n/6)])
+            if(!(output[n] in winCountDict[groups[Math.floor(n/6)]])){
+              winCountDict[groups[Math.floor(n/6)]][output[n]] = {'winCount' : 1, "loserList" : [loser]}
+            } else {
+              winCountDict[groups[Math.floor(n/6)]][output[n]]['winCount'] = winCountDict[groups[Math.floor(n/6)]][output[n]]['winCount'] + 1
+              winCountDict[groups[Math.floor(n/6)]][output[n]]['loserList'].push(loser)
+            }
+          }
+          console.log(winCountDict)
+          var groupResults = {}
+          for(g=0;g<groups.length;g++){
+            var currentGroup = groups[g]
+            var currentDict = winCountDict[currentGroup]
+            var group = Object.keys(currentDict)
+            var dataLsts = Object.values(currentDict)
+            group.sort(function(a,b){
+              if(currentDict[b]['winCount'] - currentDict[a]['winCount'] != 0){
+                return currentDict[b]['winCount'] - currentDict[a]['winCount']
+              } else {
+                if(currentDict[a]['loserList'].includes(b)){
+                  return -1
+                } else {
+                  return 1
+                }
+              }
+            })
+            console.log(group)
+            console.log(currentDict)
+            groupResults[currentGroup] = group
+          }
+          matchids = ["1A2B","1C2D","1E2F","1G2H","1B2A","1D2C","1F2E","1H2G"]
+          matchids.forEach(function(element,index){
+            document.getElementById('bracket').style.display = "block"
+            document.getElementById(element).innerHTML = "<input type='radio' name='" + element + "' value='" + groupResults[element[1]][parseInt(element[0])] + "' checked>" + groupResults[element[1]][parseInt(element[0])] + "</input> vs <input type='radio' name = '" + element +  "' value='" + groupResults[element[3]][parseInt(element[2])] + "'>"+ groupResults[element[3]][parseInt(element[2])] + "</input>"
+            
+          })
+          
+        }
+        
+        function proceedToQF(){
+          matchids = ["1A2B","1C2D","1E2F","1G2H","1B2A","1D2C","1F2E","1H2G"]
+          roundLst = ["R161","R162","R163","R164","R165","R166","R167","R168"]
+          winnerDict = {}
+          qfids = ["QF1","QF2","QF3","QF4"]
+          qfdict = {"QF1":[],"QF2":[],"QF3":[],"QF4":[]}
+          matchids.forEach(function(element,index){
+            radios = document.getElementsByName(element)
+            radios.forEach(function(radio){
+              radio.disabled = true
+              if(radio.checked){
+                var winner = radio.value
+                winnerDict[roundLst[index]] = winner
+                qfindex = index
+                if(qfindex % 2 != 0){
+                  qfindex = qfindex - 1
+                }
+                qfindex = qfindex/2
+                qfdict[qfids[qfindex]].push(winner)
+              }
+            })
+          })
+          qfids.forEach(function(qf){
+            console.log(qf)
+            console.log(qfdict)
+            document.getElementById(qf).innerHTML = `<input type='radio' name=${qf} value='${qfdict[qf][0]}' checked>${qfdict[qf][0]}</input> vs <input type='radio' name = '${qf}' value='${qfdict[qf][1]}'>${qfdict[qf][1]}</input>`
+          })
+          document.getElementById("R16Next").style.display = "none"
+          document.getElementById("QFNext").style.display = "block"
+          serverdata = winnerDict
+          serverdata['name'] = document.getElementById("name").value
+          console.log(serverdata)
+          $.ajax({
+            type: "POST",
+            url: "/pushpredictions",
+            data: JSON.stringify(serverdata),
+            contentType: "application/json",
+            dataType: 'json' 
+          });
+        }
+        function proceedToSF(){
+          matchids = ["QF1","QF2","QF3","QF4"]
+          qfids = ["SF1","SF2"]
+          qfdict = {"SF1":[],"SF2":[]}
+          roundLst = matchids
+          winnerDict = {}
+          matchids.forEach(function(element,index){
+            radios = document.getElementsByName(element)
+            radios.forEach(function(radio){
+              radio.disabled = true
+              if(radio.checked){
+                var winner = radio.value
+                winnerDict[roundLst[index]] = winner
+                qfindex = index
+                if(qfindex % 2 != 0){
+                  qfindex = qfindex - 1
+                }
+                qfindex = qfindex/2
+                qfdict[qfids[qfindex]].push(winner)
+              }
+            })
+          })
+          qfids.forEach(function(qf){
+            console.log(qf)
+            console.log(qfdict)
+            document.getElementById(qf).innerHTML = `<input type='radio' name=${qf} value='${qfdict[qf][0]}'' checked>${qfdict[qf][0]}</input> vs <input type='radio' name = '${qf}' value='${qfdict[qf][1]}'>${qfdict[qf][1]}</input>`
+          })
+          document.getElementById("QFNext").style.display = "none"
+          document.getElementById("SFNext").style.display = "block"
+          serverdata = winnerDict
+          serverdata['name'] = document.getElementById("name").value
+          console.log(serverdata)
+          $.ajax({
+            type: "POST",
+            url: "/pushpredictions",
+            data: JSON.stringify(serverdata),
+            contentType: "application/json",
+            dataType: 'json' 
+          });
+        }
+        function proceedToF(){
+          matchids = ["SF1","SF2"]
+          qfids = ["F1"]
+          qfdict = {"F1":[]}
+          roundLst = matchids
+          winnerDict = {}
+          matchids.forEach(function(element,index){
+            radios = document.getElementsByName(element)
+            radios.forEach(function(radio){
+              radio.disabled = true
+              if(radio.checked){
+                var winner = radio.value
+                winnerDict[roundLst[index]] = winner
+                qfindex = index
+                if(qfindex % 2 != 0){
+                  qfindex = qfindex - 1
+                }
+                qfindex = qfindex/2
+                qfdict[qfids[qfindex]].push(winner)
+              }
+            })
+          })
+          qfids.forEach(function(qf){
+            console.log(qf)
+            console.log(qfdict)
+            document.getElementById(qf).innerHTML = `<input type='radio' name=${qf} value='${qfdict[qf][0]}'' checked>${qfdict[qf][0]}</input> vs <input type='radio' name = '${qf}' value='${qfdict[qf][1]}'>${qfdict[qf][1]}</input>`
+          })
+          document.getElementById("SFNext").style.display = "none"
+          document.getElementById("FNext").style.display = "block"
+          serverdata = winnerDict
+          serverdata['name'] = document.getElementById("name").value
+          console.log(serverdata)
+          $.ajax({
+            type: "POST",
+            url: "/pushpredictions",
+            data: JSON.stringify(serverdata),
+            contentType: "application/json",
+            dataType: 'json' 
+          });
+        }
+        function showChamp(){
+          matchids = ["F1"]
+          qfids = ["champion"]
+          qfdict = {"champion": []}
+          roundLst = matchids
+          winnerDict = {}
+          matchids.forEach(function(element,index){
+            radios = document.getElementsByName(element)
+            radios.forEach(function(radio){
+              radio.disabled = true
+              if(radio.checked){
+                var winner = radio.value
+                winnerDict[roundLst[index]] = winner
+                qfindex = index
+                if(qfindex % 2 != 0){
+                  qfindex = qfindex - 1
+                }
+                qfindex = qfindex/2
+                qfdict[qfids[qfindex]].push(winner)
+              }
+            })
+          })
+          qfids.forEach(function(qf){
+            console.log(qf)
+            console.log(qfdict)
+            document.getElementById(qf).innerHTML = `Your predicted world cup champion is ${qfdict[qf][0]}!`
+          })
+          document.getElementById("FNext").style.display = "none"
+          document.getElementById("submit").style.display = "block"
+          serverdata = winnerDict
+          serverdata['name'] = document.getElementById("name").value
+          console.log(serverdata)
+          $.ajax({
+            type: "POST",
+            url: "/pushpredictions",
+            data: JSON.stringify(serverdata),
+            contentType: "application/json",
+            dataType: 'json' 
+          });
+        }
+        
+    </script>
+</body>
+</html>
